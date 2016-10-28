@@ -7,7 +7,7 @@ function diamond2($letter){
     //construct multi array and fill it with spaces
     $result = array_fill(1, $nb_rows, array_fill(1, $nb_cols, ' '));
     
-    //fill first part
+    //place letters in array
     foreach(range('a', $letter) as $char){
         $n_row = position($char);
         $result[$n_row][$position - (position($char)-1)] = 
