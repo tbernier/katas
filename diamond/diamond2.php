@@ -4,7 +4,7 @@ function diamond2($letter){
     $position = position($letter);
     $nb_rows = $nb_cols = $position*2-1;
 
-    //construct multi array for first part and fill it with spaces
+    //construct multi array and fill it with spaces
     $result = array_fill(1, $nb_rows, array_fill(1, $nb_cols, ' '));
     
     //fill first part
