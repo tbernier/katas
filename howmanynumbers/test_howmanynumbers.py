@@ -37,7 +37,27 @@ class HowManyNumbersProcessTest(TestCase):
 
         self.assertEqual(howmanynumbers.process(), [1, 2, 2])
 
+    def test_it_return_empty_array_with_total_1_digit_2(self):
+        howmanynumbers = HowManyNumbers(1, 2)
+
+        self.assertEqual(howmanynumbers.process(), [])
+
+    def test_it_return_empty_array_with_total_10_digit_1(self):
+        howmanynumbers = HowManyNumbers(10, 1)
+
+        self.assertEqual(howmanynumbers.process(), [])
+
     def test_it_return_1_11_11_with_total_2_digit_2(self):
         howmanynumbers = HowManyNumbers(2, 2)
 
         self.assertEqual(howmanynumbers.process(), [1, 11, 11])
+
+    def test_it_return_1_12_12_with_total_3_digit_2(self):
+        howmanynumbers = HowManyNumbers(3, 2)
+
+        self.assertEqual(howmanynumbers.process(), [1, 12, 12])
+
+    def test_it_return_2_13_22_with_total_4_digit_2(self):
+        howmanynumbers = HowManyNumbers(4, 2)
+
+        self.assertEqual(howmanynumbers.process(), [2, 13, 22])
