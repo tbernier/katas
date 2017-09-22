@@ -3,6 +3,7 @@ class HowManyNumbers:
     def __init__(self, total=1, digit=1):
         self.total = total
         self.digit = digit
+        self.buffer = []
         self.results = []
 
         if not isinstance(self.total, int) or not isinstance(self.digit, int):
@@ -22,15 +23,9 @@ class HowManyNumbers:
         if self.total == self.digit:
             return [1, int("1" * self.digit), int("1" * self.digit)]
 
-        buffer = []
-        for x in range(1, self.total):
-            # recursif incomming
-            if self.digit == 2:
-                buffer.append(str(x) + str(self.total - x))
-            else:
-                buffer.append(str(self.total))
+        self.cutInTwo(self.total, self.digit, '')
 
-        for i in buffer:
+        for i in self.buffer:
             self.results.append(int(''.join(sorted(i))))
 
         self.results = list(set(self.results))
@@ -40,6 +35,17 @@ class HowManyNumbers:
             self.results[0],
             self.results[-1]
         ]
+
+    def cutInTwo(self, total, digit, prepend):
+
+        if digit == 1:
+            self.buffer.append(str(total))
+        elif digit == 2:
+            for x in range(1, total):
+                self.buffer.append(str(prepend) + str(x) + str(total - x))
+        else:
+            for x in range(1, (total - digit)):
+                self.cutInTwo(total - x, digit - 1, x)
 
 
 class InvalidParameterError(Exception):

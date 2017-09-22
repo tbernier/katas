@@ -61,3 +61,14 @@ class HowManyNumbersProcessTest(TestCase):
         howmanynumbers = HowManyNumbers(4, 2)
 
         self.assertEqual(howmanynumbers.process(), [2, 13, 22])
+
+    def test_it_return_1_112_112_with_total_4_digit_3(self):
+        howmanynumbers = HowManyNumbers(4, 3)
+
+        self.assertEqual(howmanynumbers.process(), [1, 112, 112])
+
+    def test_it_return_3_114_222_with_total_6_digit_3(self):
+        howmanynumbers = HowManyNumbers(6, 3)
+
+        self.assertEqual(howmanynumbers.process(), [3, 114, 222])
+
