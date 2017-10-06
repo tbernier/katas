@@ -29,6 +29,7 @@ class HowManyNumbers:
             self.results.append(int(''.join(sorted(i))))
 
         self.results = list(set(self.results))
+        self.results.sort()
 
         return [
             len(self.results),
@@ -41,11 +42,20 @@ class HowManyNumbers:
         if digit == 1:
             self.buffer.append(str(total))
         elif digit == 2:
+            if total > 18:
+                return
+
             for x in range(1, total):
+                if x >= 10 or total - x >= 10:
+                    continue
+
                 self.buffer.append(str(prepend) + str(x) + str(total - x))
         else:
-            for x in range(1, (total - digit)):
-                self.cutInTwo(total - x, digit - 1, x)
+            for x in range(1, (total - digit + 1)):
+                if x > 9:
+                    continue
+
+                self.cutInTwo(total - x, digit - 1, str(prepend) + str(x))
 
 
 class InvalidParameterError(Exception):

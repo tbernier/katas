@@ -72,3 +72,37 @@ class HowManyNumbersProcessTest(TestCase):
 
         self.assertEqual(howmanynumbers.process(), [3, 114, 222])
 
+    def test_it_return_4_115_223_with_total_7_digit_3(self):
+        howmanynumbers = HowManyNumbers(7, 3)
+
+        self.assertEqual(howmanynumbers.process(), [4, 115, 223])
+
+    def test_it_return_7_117_333_with_total_9_digit_3(self):
+        howmanynumbers = HowManyNumbers(9, 3)
+
+        self.assertEqual(howmanynumbers.process(), [7, 117, 333])
+
+    def test_it_return_11_129_444_with_total_12_digit_3(self):
+        howmanynumbers = HowManyNumbers(12, 3)
+
+        self.assertEqual(howmanynumbers.process(), [11, 129, 444])
+
+    def test_it_return_2_699_888_with_total_24_digit_3(self):
+        howmanynumbers = HowManyNumbers(24, 3)
+
+        self.assertEqual(howmanynumbers.process(), [3, 699, 888])
+
+    def test_it_return_8_118_334_with_total_10_digit_3(self):
+        howmanynumbers = HowManyNumbers(10, 3)
+
+        self.assertEqual(howmanynumbers.process(), [8, 118, 334])
+
+    def test_it_return_3_1114_1222_with_total_7_digit_4(self):
+        howmanynumbers = HowManyNumbers(7, 4)
+
+        self.assertEqual(howmanynumbers.process(), [3, 1114, 1222])
+
+    def test_it_return_123_116999_566666_with_total_35_digit_6(self):
+        howmanynumbers = HowManyNumbers(35, 6)
+
+        self.assertEqual(howmanynumbers.process(), [123, 116999, 566666])
