@@ -1,3 +1,6 @@
+import math
+
+
 class HowManyNumbers:
 
     def __init__(self, total=1, digit=1):
@@ -41,21 +44,28 @@ class HowManyNumbers:
 
         if digit == 1:
             self.buffer.append(str(total))
-        elif digit == 2:
-            if total > 18:
-                return
+            return
 
-            for x in range(1, total):
+        if total > digit * 9:
+            return
+
+        if digit == 2:
+            for x in range(1, int(math.ceil(total / 2) + 1)):
                 if x >= 10 or total - x >= 10:
                     continue
 
                 self.buffer.append(str(prepend) + str(x) + str(total - x))
-        else:
-            for x in range(1, (total - digit + 1)):
-                if x > 9:
-                    continue
+            return
 
-                self.cutInTwo(total - x, digit - 1, str(prepend) + str(x))
+        begin = 1
+        if prepend:
+            begin = int(prepend[-1])
+
+        for x in range(begin, (total - digit + 1)):
+            if x > 9:
+                continue
+
+            self.cutInTwo(total - x, digit - 1, str(prepend) + str(x))
 
 
 class InvalidParameterError(Exception):
