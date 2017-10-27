@@ -27,3 +27,28 @@ class SnailTest(TestCase):
         snail = Snail([[3]])
 
         self.assertEqual(snail.process(), [3])
+
+    def test_when_square_2x2_result_is_its_values_in_snail_order(self):
+        snail = Snail([[4, 2], [1, 5]])
+
+        self.assertEqual(snail.process(), [4, 2, 5, 1])
+
+    # def test_when_square_3x3_result_is_its_values_in_snail_order(self):
+    #     snail = Snail([[4, 2, 9], [1, 5, 5], [5, 4, 6]])
+
+    #     self.assertEqual(snail.process(), [4, 2, 9, 5, 6, 4, 5, 1, 5])
+
+
+class TruncateArrayTest(TestCase):
+    def test_when_square_2x2_result_is_first_row_and_last_column(self):
+        snail = Snail([[4, 2], [1, 5]])
+
+        self.assertEqual(snail.truncateArray([]), [4, 2, 5])
+
+
+class ReverseArrayTest(TestCase):
+    def test_when_square_2x2_result_is_reversed_array(self):
+        snail = Snail([[4, 2], [1, 5]])
+        snail.reverseArray()
+
+        self.assertEqual(snail.data, [[5, 1], [2, 4]])
