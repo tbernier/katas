@@ -10,43 +10,41 @@ class Snail:
         if self.data == []:
             raise InvalidParameterError
 
-        for line in self.data:
-            if len(line) != len(self.data):
-                raise InvalidParameterError
-
-            for value in line:
-                if not isinstance(value, int):
+        if self.data != [[]]:
+            for line in self.data:
+                if len(line) != len(self.data):
                     raise InvalidParameterError
 
-        self.process()
+                for value in line:
+                    if not isinstance(value, int):
+                        raise InvalidParameterError
 
     def process(self):
         result = []
 
-        if len(self.data) == 1:
-            return self.data[0]
-
-        result.append(self.data[0][0])
-        result.append(self.data[0][1])
-        result.append(self.data[1][1])
-        result.append(self.data[1][0])
+        while len(self.data):
+            self.data, result = truncateArray(self.data, result)
 
         return result
 
-    def truncateArray(self, result):
-        for value in self.data.pop(0):
-            result.append(value)
 
-        for line in self.data:
-            result.append(line.pop())
+def truncateArray(data, result):
+    for value in data.pop(0):
+        result.append(value)
 
-        return result
+    for line in data:
+        result.append(line.pop())
 
-    def reverseArray(self):
-        self.data.reverse()
+    return reverseArray(data), result
 
-        for i in range(0, len(self.data)):
-            self.data[i].reverse()
+
+def reverseArray(data):
+    data.reverse()
+
+    for i in range(0, len(data)):
+        data[i].reverse()
+
+    return data
 
 
 class InvalidParameterError(Exception):
