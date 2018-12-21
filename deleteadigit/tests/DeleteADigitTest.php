@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 final class DeleteADigitTest extends TestCase
 {
 
-    public function provideInput()
+    public function provideInputNan()
     {
         yield ['a'];
         yield [1.20];
@@ -14,8 +14,8 @@ final class DeleteADigitTest extends TestCase
     }
 
     /**
-    * @dataProvider provideInput
-    * @expectedException \Exception
+    * @dataProvider provideInputNan
+    * @expectedException NanException
     */
     public function testIfInputParameterIsNotAnIntegerThenRisesException($input) :void
     {
@@ -30,10 +30,49 @@ final class DeleteADigitTest extends TestCase
 
     /**
     * @dataProvider provideInputOutOfRange
-    * @expectedException \Exception
+    * @expectedException RangeException
     */
     public function testWhenInputParameterIsOutsideRangeThenRisesException($input) :void
     {
         $output = DeleteADigit::deleteADigit($input);
+    }
+
+    public function provideInputTwoDigits()
+    {
+        yield [52, 5];
+        yield [42, 4];
+        yield [27, 7];
+        yield [80, 8];
+        yield [77, 7];
+    }
+
+    /**
+    * @dataProvider provideInputTwoDigits
+    *
+    */
+    public function testWithTwoDigits($input, $expected) :void
+    {
+        $output = DeleteADigit::deleteADigit($input);
+        $this->assertSame($expected, $output);
+    }
+
+    public function provideInput()
+    {
+        yield [152, 52];
+        yield [58496, 8496];
+        yield [87654, 8765];
+        yield [45678, 5678];
+        yield [56784, 6784];
+        yield [1001, 101];
+    }
+
+    /**
+    * @dataProvider provideInput
+    *
+    */
+    public function testWithMultipleDigits($input, $expected) :void
+    {
+        $output = DeleteADigit::deleteADigit($input);
+        $this->assertSame($expected, $output);
     }
 }
