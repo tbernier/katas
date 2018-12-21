@@ -1,0 +1,1 @@
+https://www.codewars.com/kata/simple-fun-number-79-delete-a-digit
