@@ -43,7 +43,8 @@ final class DeleteADigitTest extends TestCase
         yield [42, 4];
         yield [27, 7];
         yield [80, 8];
-        yield [77, 7];
+        yield [52, 5];
+        yield [10, 1];
     }
 
     /**
@@ -63,7 +64,12 @@ final class DeleteADigitTest extends TestCase
         yield [87654, 8765];
         yield [45678, 5678];
         yield [56784, 6784];
+        yield [98456, 9856];
+        yield [333245, 33345];
+        yield [33361, 3361];
         yield [1001, 101];
+        yield [1111, 111];
+        yield [1000000, 100000];
     }
 
     /**

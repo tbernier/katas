@@ -20,6 +20,7 @@ final class DeleteADigit
 		}
 
 		$param = str_split((string)$param);
+		$second_last = count($param)-2;
 
 		foreach ($param as $key => $digit)
 		{
@@ -29,7 +30,7 @@ final class DeleteADigit
 				break;
 			}
 
-			if($key === (count($param)-2))
+			if($key === $second_last)
 			{
 				unset($param[$key+1]);
 				break;
