@@ -1,0 +1,18 @@
+{
+  "name": "moleculeToAtoms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "date +%H:%M:%S & phpunit --bootstrap src/autoload.php tests/MoleculeToAtomsTest --colors",
+    "test:watch": "watch 'npm run --silent test' ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "watch": "^1.0.2"
+  }
+}
