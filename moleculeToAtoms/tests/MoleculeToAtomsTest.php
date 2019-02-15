@@ -11,13 +11,15 @@ final class MoleculeToAtomsTest extends TestCase
     */
     public function testIfEmptyInputThenRaisesException() :void
     {
-        $output = MoleculeToAtoms::parse_molecule('');
+        $moleculeToAtoms = new MoleculeToAtoms();
+        $output = $moleculeToAtoms->parse_molecule('');
     }
 
 
     public function testValidInputReturnsArray() :void
     {
-        $output = MoleculeToAtoms::parse_molecule('H');
+        $moleculeToAtoms = new MoleculeToAtoms();
+        $output = $moleculeToAtoms->parse_molecule('H');
 
         $this->assertTrue(is_array($output));
     }
@@ -33,14 +35,18 @@ final class MoleculeToAtomsTest extends TestCase
     */
     public function testSimpleMoleculeReturnsExpectedOutput($input, $expected) :void
     {
-        $output = MoleculeToAtoms::parse_molecule($input);
+        $moleculeToAtoms = new MoleculeToAtoms();
+        $output = $moleculeToAtoms->parse_molecule($input);
 
         $this->assertSame($expected, $output);
     }
 
     public function provideSimpleMolecules() {
         yield ['O2', ['O' => 2]];
-        //yield ['Mg3', ['Mg' => 3]];
+        yield ['Mg3', ['Mg' => 3]];
+        yield ['Mg3O2', ['Mg' => 3, 'O' => 2]];
+        yield ['Mg3O2CaCO3', ['Mg' => 3, 'O' => 5, 'Ca' => 1, 'C' => 1]];
+        yield ['O2OO3O4', ['O' => 10]];
     }
 
     /**
@@ -48,7 +54,8 @@ final class MoleculeToAtomsTest extends TestCase
     */
     public function testMoleculeReturnsExpectedOutput($input, $expected) :void
     {
-        $output = MoleculeToAtoms::parse_molecule($input);
+        $moleculeToAtoms = new MoleculeToAtoms();
+        $output = $moleculeToAtoms->parse_molecule($input);
 
         $this->assertSame($expected, $output);
     }

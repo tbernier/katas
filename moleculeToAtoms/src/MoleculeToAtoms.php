@@ -1,7 +1,8 @@
 <?php
 final class MoleculeToAtoms{
+	private $final = [];
 
-	public static function parse_molecule(string $input): array
+	public function parse_molecule(string $input): array
 	{
 		if (empty($input))
 		{
@@ -12,25 +13,36 @@ final class MoleculeToAtoms{
 
 
 		$last = '';
-		$final = [];
 		foreach ($molecule as $character)
 		{
 			if (ctype_lower($character)){
-				$final[$last.$character] = 1;
-				unset($final[$last]);
+				$this->final[$last.$character] = 1;
+				unset($this->final[$last]);
 				$last = $last.$character;
-				break;
+				continue;
 			}
 
-			if (!is_numeric($character))
-			{
-				$final[$character] = 1;
+			if(!is_numeric($character)){
+				$this->addAtom($character);
+
 				$last = $character;
-			} else {
-				$final[$last] = (int)$character;
+			}else{
+				$number = (int)$character;
+				if(isset($this->final[$last])){
+					$number--;
+				}
+				$this->addAtom($last, $number);
 			}
 		}
 
-		return $final;
+		return $this->final;
+	}
+
+	private function addAtom(string $atom, int $number = 1) :void{
+		if(!isset($this->final[$atom])){
+			$this->final[$atom] = $number;
+		}else{
+			$this->final[$atom] += $number;
+		}
 	}
 }
