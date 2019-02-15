@@ -9,7 +9,9 @@ final class MoleculeToAtoms{
 			throw new InputException('Invalid input');
 		}
 
-		$molecule = str_split($input);
+		$molecule = $this->flattenMolecule($input);
+
+		$molecule = str_split($molecule);
 
 
 		$last = '';
@@ -44,5 +46,37 @@ final class MoleculeToAtoms{
 		}else{
 			$this->final[$atom] += $number;
 		}
+	}
+
+	private function flattenMolecule(string $molecule) : string{
+
+		$last;
+		$flatMolecule = '';
+		$molecule = str_split($molecule);
+		foreach ($molecule as $key => $character) {
+			if(!isset($molecule[$key+1])){
+				if(ctype_upper($next)){
+					$flatMolecule .= $character;
+				}
+				break;
+			}
+
+			$next = $molecule[$key+1];
+			if(ctype_lower($next)){
+				$flatMolecule .= $character;
+				$last = $last.$character;
+				break;
+			}
+
+			if(is_numeric($next)){
+				//TODO
+				break;
+			}
+
+			$flatMolecule .= $character;
+			$last = $character;
+		}
+
+		return $molecule;
 	}
 }

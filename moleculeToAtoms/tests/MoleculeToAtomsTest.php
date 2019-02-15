@@ -47,6 +47,7 @@ final class MoleculeToAtomsTest extends TestCase
         yield ['Mg3O2', ['Mg' => 3, 'O' => 2]];
         yield ['Mg3O2CaCO3', ['Mg' => 3, 'O' => 5, 'Ca' => 1, 'C' => 1]];
         yield ['O2OO3O4', ['O' => 10]];
+        yield ['OOOOOOOOOO', ['O' => 10]];
     }
 
     /**
