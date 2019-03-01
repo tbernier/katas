@@ -20,9 +20,9 @@ final class MoleculeToAtoms{
 	}
 
 	public function flattenMolecule(string $molecule) : array{
+		$molecule = str_split($molecule);
 		$last;
 		$flatMolecule = [];
-		$molecule = str_split($molecule);
 		foreach ($molecule as $key => $character) {
 			if(!isset($molecule[$key+1])){
 				if(ctype_upper($character)){
@@ -57,4 +57,30 @@ final class MoleculeToAtoms{
 
 		return $flatMolecule;
 	}
+
+	public function distributeMolecule(string $molecule) : string{
+		$factoredPart = $this->getFactoredPart($molecule);
+		if(!empty($factoredPart)){
+			$coef = str_replace('('.$factoredPart.')', '', $molecule);
+			$return = '';
+			for($i=0; $i < $coef; $i++){
+				$return .= $factoredPart;
+			}
+			return $return;
+		}
+
+		return $molecule;
+	}
+
+	public function getFactoredPart(string $molecule) : string{
+		if(false !== strpos($molecule, '(')){
+			$start = strpos($molecule, '(') + 1;
+			$end = strpos($molecule, ')');
+
+			return substr($molecule, $start, $end - $start);
+		}
+
+		return '';
+	}
+
 }

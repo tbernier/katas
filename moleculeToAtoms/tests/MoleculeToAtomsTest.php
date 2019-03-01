@@ -80,4 +80,38 @@ final class MoleculeToAtomsTest extends TestCase
 
         $this->assertSame($expected, $output);
     }
+
+    public function provideFactoredMoleculesToDistribute() {
+        yield ['(OH)2', 'OHOH'];
+        yield ['OH2', 'OH2'];
+    }
+
+    /**
+    * @dataProvider provideFactoredMoleculesToDistribute
+    */
+    public function testDistributeComplexMoleculeReturnsExpectedOutput($molecule, $expected) :void
+    {
+        $moleculeToAtoms = new MoleculeToAtoms();
+        $output = $moleculeToAtoms->distributeMolecule($molecule);
+
+        $this->assertSame($expected, $output);
+    }
+
+    public function provideFactoredMoleculesToGetFactoredPart() {
+        // yield ['(OH)2', ['factoredPart' => 'OH', 'multiplier' => 2, '']];
+        yield ['(OH)2', 'OH'];
+        yield ['OH', ''];
+        //yield ['Ca(OH)2P', 'CaPOHOH'];
+    }
+
+    /**
+    * @dataProvider provideFactoredMoleculesToGetFactoredPart
+    */
+    public function testGetFactoredPartReturnsExpectedOutput($molecule, $expected) :void
+    {
+        $moleculeToAtoms = new MoleculeToAtoms();
+        $output = $moleculeToAtoms->getFactoredPart($molecule);
+
+        $this->assertSame($expected, $output);
+    }
 }
