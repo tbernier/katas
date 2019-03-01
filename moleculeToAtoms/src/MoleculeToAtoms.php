@@ -11,72 +11,50 @@ final class MoleculeToAtoms{
 
 		$molecule = $this->flattenMolecule($input);
 
-		$molecule = str_split($molecule);
+		$tmp = [];
+		array_walk($molecule, function($value) use (&$tmp){
+			$tmp[$value] = (isset($tmp[$value])? $tmp[$value]+1:1);
+		});
 
-
-		$last = '';
-		foreach ($molecule as $character)
-		{
-			if (ctype_lower($character)){
-				$this->final[$last.$character] = 1;
-				unset($this->final[$last]);
-				$last = $last.$character;
-				continue;
-			}
-
-			if(!is_numeric($character)){
-				$this->addAtom($character);
-
-				$last = $character;
-			}else{
-				$number = (int)$character;
-				if(isset($this->final[$last])){
-					$number--;
-				}
-				$this->addAtom($last, $number);
-			}
-		}
-
-		return $this->final;
+		return $tmp;
 	}
 
-	private function addAtom(string $atom, int $number = 1) :void{
-		if(!isset($this->final[$atom])){
-			$this->final[$atom] = $number;
-		}else{
-			$this->final[$atom] += $number;
-		}
-	}
-
-	private function flattenMolecule(string $molecule) : string{
-
+	public function flattenMolecule(string $molecule) : array{
 		$last;
-		$flatMolecule = '';
+		$flatMolecule = [];
 		$molecule = str_split($molecule);
 		foreach ($molecule as $key => $character) {
 			if(!isset($molecule[$key+1])){
-				if(ctype_upper($next)){
-					$flatMolecule .= $character;
+				if(ctype_upper($character)){
+					$flatMolecule[] = $character;
 				}
-				break;
+				if(!is_numeric($character)){
+					break;
+				}
+			}
+
+			if(is_numeric($character)){
+				for($i=1; $i < $character; $i++){
+					$flatMolecule[] = $last;
+				}
+				continue;
 			}
 
 			$next = $molecule[$key+1];
 			if(ctype_lower($next)){
-				$flatMolecule .= $character;
-				$last = $last.$character;
-				break;
+				$flatMolecule[] = $character.$next;
+				$last = $character.$next;
+				continue;
 			}
 
-			if(is_numeric($next)){
-				//TODO
-				break;
+			if(ctype_lower($character)){
+				continue;
 			}
 
-			$flatMolecule .= $character;
+			$flatMolecule[] = $character;
 			$last = $character;
 		}
 
-		return $molecule;
+		return $flatMolecule;
 	}
 }

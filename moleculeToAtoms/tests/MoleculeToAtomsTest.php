@@ -61,4 +61,23 @@ final class MoleculeToAtomsTest extends TestCase
         $this->assertSame($expected, $output);
     }
 
+    public function provideSimpleMoleculesToFlatten() {
+        yield ['O2', ['O', 'O']];
+        yield ['Mg3', ['Mg', 'Mg', 'Mg']];
+        yield ['Mg3O2', ['Mg', 'Mg', 'Mg', 'O', 'O']];
+        yield ['Mg3O2CaCO3', ['Mg', 'Mg', 'Mg', 'O', 'O', 'Ca', 'C', 'O', 'O', 'O']];
+        yield ['O2OO3O4', ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']];
+        yield ['OOOOOOOOOO', ['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']];
+    }
+
+    /**
+    * @dataProvider provideSimpleMoleculesToFlatten
+    */
+    public function testFlattenMoleculeReturnsExpectedOutput($molecule, $expected) :void
+    {
+        $moleculeToAtoms = new MoleculeToAtoms();
+        $output = $moleculeToAtoms->flattenMolecule($molecule);
+
+        $this->assertSame($expected, $output);
+    }
 }
