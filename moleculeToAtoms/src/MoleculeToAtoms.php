@@ -9,7 +9,8 @@ final class MoleculeToAtoms{
 			throw new InputException('Invalid input');
 		}
 
-		$molecule = $this->flattenMolecule($input);
+		$molecule = $this->distributeMolecule($input);
+		$molecule = $this->flattenMolecule($molecule);
 
 		$tmp = [];
 		array_walk($molecule, function($value) use (&$tmp){
@@ -61,12 +62,7 @@ final class MoleculeToAtoms{
 	public function distributeMolecule(string $molecule) : string{
 		$factoredPart = $this->getFactoredPart($molecule);
 		if(!empty($factoredPart)){
-			$coef = str_replace('('.$factoredPart.')', '', $molecule);
-			$return = '';
-			for($i=0; $i < $coef; $i++){
-				$return .= $factoredPart;
-			}
-			return $return;
+			return $factoredPart;
 		}
 
 		return $molecule;
@@ -77,10 +73,22 @@ final class MoleculeToAtoms{
 			$start = strpos($molecule, '(') + 1;
 			$end = strpos($molecule, ')');
 
-			return substr($molecule, $start, $end - $start);
+			$factorisedPart = substr($molecule, $start, $end - $start);
+			$coef = substr($molecule, $end + 1, 1);
+
+			return $this->getDistributedPart($factorisedPart, $coef);
 		}
 
 		return '';
+	}
+
+	public function getDistributedPart(string $factoredPart, int $coef) : string{
+
+		$return = '';
+		for($i=0; $i < $coef; $i++){
+			$return .= $factoredPart;
+		}
+		return $return;
 	}
 
 }

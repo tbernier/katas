@@ -84,6 +84,7 @@ final class MoleculeToAtomsTest extends TestCase
     public function provideFactoredMoleculesToDistribute() {
         yield ['(OH)2', 'OHOH'];
         yield ['OH2', 'OH2'];
+        //yield ['H(OH)2', 'HOHOH'];
     }
 
     /**
@@ -98,10 +99,10 @@ final class MoleculeToAtomsTest extends TestCase
     }
 
     public function provideFactoredMoleculesToGetFactoredPart() {
-        // yield ['(OH)2', ['factoredPart' => 'OH', 'multiplier' => 2, '']];
-        yield ['(OH)2', 'OH'];
+        yield ['(OH)2', 'OHOH'];
         yield ['OH', ''];
-        //yield ['Ca(OH)2P', 'CaPOHOH'];
+        //yield ['H(OH)2', 'OH'];
+
     }
 
     /**
@@ -111,6 +112,41 @@ final class MoleculeToAtomsTest extends TestCase
     {
         $moleculeToAtoms = new MoleculeToAtoms();
         $output = $moleculeToAtoms->getFactoredPart($molecule);
+
+        $this->assertSame($expected, $output);
+    }
+
+    public function provideFactoredMolecules() {
+        yield ['(OH)2', ['O' => 2, 'H' => 2]];
+        yield ['(OH)3', ['O' => 3, 'H' => 3]];
+        //yield ['H(OH)2', ['O' => 2, 'H' => 3]];
+    }
+
+    /**
+    * @dataProvider provideFactoredMolecules
+    */
+    public function testFactoredMoleculeReturnsExpectedOutput($input, $expected) :void
+    {
+        $moleculeToAtoms = new MoleculeToAtoms();
+        $output = $moleculeToAtoms->parse_molecule($input);
+
+        $this->assertSame($expected, $output);
+    }
+
+    public function provideFactoredMoleculesToGetDistributedPart() {
+        yield [['OH', 2], 'OHOH'];
+        yield [['OMg', 3], 'OMgOMgOMg'];
+        yield [['OMg', 1], 'OMg'];
+        yield [['O2', 2], 'O2O2'];
+    }
+
+    /**
+    * @dataProvider provideFactoredMoleculesToGetDistributedPart
+    */
+    public function testGetDistributedPartReturnsExpectedOutput($input, $expected) :void
+    {
+        $moleculeToAtoms = new MoleculeToAtoms();
+        $output = $moleculeToAtoms->getDistributedPart($input[0], $input[1]);
 
         $this->assertSame($expected, $output);
     }
