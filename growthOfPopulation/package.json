@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "date +%H:%M:%S & phpunit --bootstrap src/autoload.php tests/GrowthOfPopulation --colors",
+    "test": "date +%H:%M:%S & phpunit --bootstrap src/autoload.php tests/GrowthOfPopulationTest --colors",
     "test:watch": "watch 'npm run --silent test' ."
   },
   "author": "",
